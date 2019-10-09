@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<Movies, Long> {
     Optional<Movies> findMovieByType (String type);
+    Optional<Movies> findMoviesByName (String name);
+    Optional<Movies> findMoviesByYearReleased(String yearReleased);
+    Optional<Movies> findMoviesByNameAndYearReleased(String name, String yearReleased);
 }

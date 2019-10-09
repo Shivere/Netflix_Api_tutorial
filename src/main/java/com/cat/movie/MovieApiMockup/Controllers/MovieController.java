@@ -1,5 +1,6 @@
 package com.cat.movie.MovieApiMockup.Controllers;
 
+import com.cat.movie.MovieApiMockup.InvalidInputException;
 import com.cat.movie.MovieApiMockup.Models.Category;
 import com.cat.movie.MovieApiMockup.Models.Movies;
 import com.cat.movie.MovieApiMockup.NotFoundException;
@@ -8,6 +9,7 @@ import com.cat.movie.MovieApiMockup.Repository.MovieRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "Movies")
@@ -31,4 +33,17 @@ public class MovieController {
 
         return movieRepository.findAll();
     }
+
+    @PostMapping
+    public Movies suggest(@RequestBody Movies movies){
+        if (movies.getName() == null ||
+        movies.getYearReleased() == null)
+            throw new InvalidInputException("Either Name or Year released is missing");
+        Optional<Movies> m = movieRepository.findMoviesByNameAndYearReleased(movies.getName(),movies.getYearReleased());
+        if (!m.isPresent()){
+            return movieRepository.save(movies);
+        }else
+            return m.get();
+    }
+
 }
