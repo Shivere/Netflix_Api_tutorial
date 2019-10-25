@@ -9,6 +9,7 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
@@ -25,7 +26,7 @@ public class Category {
 
     private Category(){}
 
-    public Category(String name){
+    public Category(String name) {
         this.name = name;
     }
 

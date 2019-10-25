@@ -1,21 +1,23 @@
 package com.cat.movie.MovieApiMockup.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "Movies")
+@Table(name = "movies")
 public class Movies {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    @NotNull(groups = Update.class)
-    private Long id;
+    @Column(name = "movie_id")
+//    @NotNull(groups = Update.class)
+    private Long movie_id;
 
     @Column(name = "name")
-    @NotNull(groups = Create.class)
+//    @NotNull(groups = Create.class)
     private String name;
 
     @Column(name = "year_released")
@@ -24,19 +26,22 @@ public class Movies {
     @Column(name = "type")
     private String type;
 
-    public Movies(String name, String yearReleased) {
+    public Movies(String name, String yearReleased, String type) {
         this.name = name;
         this.yearReleased = yearReleased;
+        this.type = type;
     }
+
     private Movies(){
 
     }
-    public Long getId() {
-        return id;
+
+    public Long getMovie_id() {
+        return movie_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMovie_id(Long movie_id) {
+        this.movie_id = movie_id;
     }
 
     public String getName() {
@@ -71,10 +76,12 @@ public class Movies {
         this.type = type;
     }
 
-    @OneToMany(mappedBy = "Movies")
+//    @JsonIgnore
+    @OneToMany(mappedBy = "movies")
     private List<Actor> actors;
-
-    @ManyToMany(mappedBy = "Movies")
+//
+//    @JsonIgnore
+    @ManyToMany(mappedBy = "movies")
     private Set<Category> categories;
 
     public Set<Category> getCategories() {
@@ -85,14 +92,14 @@ public class Movies {
         this.categories = categories;
     }
 
+
     @Override
     public String toString() {
         return "Movies{" +
-                "id=" + id +
+                "movie_id=" + movie_id +
                 ", name='" + name + '\'' +
                 ", yearReleased='" + yearReleased + '\'' +
-                ", actors=" + actors +
-                ", categories=" + categories +
+                ", type='" + type + '\'' +
                 '}';
     }
 

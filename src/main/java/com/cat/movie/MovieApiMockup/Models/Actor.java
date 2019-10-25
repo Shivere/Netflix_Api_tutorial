@@ -11,26 +11,33 @@ public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    @NotNull(groups = Update.class)
+//    @NotNull(groups = Update.class)
     private Long id;
 
     @Column(name = "name")
-    @NotNull(groups = Create.class)
+//    @NotNull(groups = Create.class)
     private String name;
 
     @Column(name = "year_born")
     private String yearBorn;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "movie_id_fk")
     private Movies movies;
 
-    public Actor(String name, String year, Movies movies){
+//    public Actor(String name, String year, Movies movies){
+//        this.name = name;
+//        this.yearBorn = year;
+//        this.movies = movies;
+//    }
+
+
+    public Actor(String name, String yearBorn) {
         this.name = name;
-        this.yearBorn = year;
-        this.movies = movies;
+        this.yearBorn = yearBorn;
     }
+
     private Actor(){
 
     }
@@ -65,6 +72,16 @@ public class Actor {
 
     public Movies getMovies() {
         return movies;
+    }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", yearBorn='" + yearBorn + '\'' +
+                ", movies=" + movies +
+                '}';
     }
 
     public interface Create{}

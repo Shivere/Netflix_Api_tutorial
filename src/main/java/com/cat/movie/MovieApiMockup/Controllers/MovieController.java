@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "Movies")
+@RequestMapping(value = "movies")
 public class MovieController {
     private final MovieRepository movieRepository;
     private final CategoryRepository categoryRepository;
@@ -40,10 +40,7 @@ public class MovieController {
         movies.getYearReleased() == null)
             throw new InvalidInputException("Either Name or Year released is missing");
         Optional<Movies> m = movieRepository.findMoviesByNameAndYearReleased(movies.getName(),movies.getYearReleased());
-        if (!m.isPresent()){
-            return movieRepository.save(movies);
-        }else
-            return m.get();
+        return m.orElseGet(() -> movieRepository.save(movies));
     }
 
 }
